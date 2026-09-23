@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日語雙語「連續自動滾動＋多功能遮幕＋一鍵縮小」旗艦教學台 v7.0</title>
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --accent: #f43f5e;
+      --bg: #070c18;
+      --card-bg: #0f172a;
+      --card-border: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Yu Gothic", sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 1.85rem;
+      background: linear-gradient(135deg, #60a5fa, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Screen Area */
+    .screen-area {
+      position: relative;
+      background: #000;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      user-select: none;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 16px 45px rgba(0,0,0,0.8);
+      margin-bottom: 18px;
+    }
+
+    .screen-backdrop {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, #17153a 0%, #030712 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+      z-index: 1;
+    }
+
+    /* Draggable Subtitle Window (可拖曳學習視窗) */
+    #yt-ja-cloze-window {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      width: 90%;
+      max-width: 820px;
+      background: rgba(11, 17, 32, 0.96);
+      border: 1.5px solid rgba(96, 165, 250, 0.4);
+      backdrop-filter: blur(16px);
+      border-radius: 14px;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.9);
+      color: #ffffff;
+      user-select: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    #yt-ja-cloze-window.is-dragging {
+      border-color: #60a5fa;
+      box-shadow: 0 20px 60px rgba(59, 130, 246, 0.7);
+      cursor: grabbing !important;
+    }
+
+    /* --------------------------------------------------------------------------
+       一鍵縮小為迷你膠囊模式 (Compact Pill)
+       -------------------------------------------------------------------------- */
+    #yt-ja-cloze-window.is-minimized {
+      max-width: 460px;
+      width: auto;
+      border-radius: 30px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(96, 165, 250, 0.5);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+      bottom: 16px;
+    }
+
+    #yt-ja-cloze-window.is-minimized .rolling-viewport,
+    #yt-ja-cloze-window.is-minimized #status-banner,
+    #yt-ja-cloze-window.is-minimized .yt-cloze-header-controls-full {
+      display: none !important;
+    }
+
+    #yt-ja-cloze-window.is-minimized .yt-cloze-header {
+      padding: 6px 14px;
+      background: transparent;
+      border-bottom: none;
+    }
+
+    .mini-preview-text {
+      display: none;
+      font-size: 13px;
+      color: #e2e8f0;
+      max-width: 260px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-left: 8px;
+    }
+
+    #yt-ja-cloze-window.is-minimized .mini-preview-text {
+      display: inline-block;
+    }
+
+    /* Header Bar */
+    .yt-cloze-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      background: rgba(30, 41, 59, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: grab;
+      font-size: 13px;
+      color: #cbd5e1;
+    }
+
+    .yt-cloze-header:active {
+      cursor: grabbing;
+    }
+
+    .btn-badge {
+      background: #1e293b;
+      border: 1px solid #475569;
+      color: #e2e8f0;
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-badge:hover {
+      background: #334155;
+      color: #fff;
+    }
+
+    .btn-badge.active {
+      background: #2563eb;
+      border-color: #60a5fa;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    /* Auto Pause Alert Banner */
+    #status-banner {
+      display: none;
+      background: linear-gradient(90deg, #1e3a8a, #0284c7);
+      padding: 8px 14px;
+      font-size: 13px;
+      color: #f0f9ff;
+      font-weight: 600;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      animation: pulse-banner 2s infinite;
+    }
+
+    @keyframes pulse-banner {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
+    }
+
+    /* Continuous Rolling Stage */
+    .rolling-viewport {
+      height: 220px;
+      overflow: hidden;
+      position: relative;
+      padding: 10px 18px;
+    }
+
+    .rolling-track {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+    }
+
+    .bilingual-card {
+      background: rgba(30, 41, 59, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 10px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .bilingual-card.is-focus {
+      background: rgba(37, 99, 235, 0.18);
+      border-color: #3b82f6;
+      box-shadow: 0 0 16px rgba(59, 130, 246, 0.3);
+      transform: scale(1.01);
+    }
+
+    .bilingual-card.is-past {
+      opacity: 0.45;
+      transform: scale(0.98);
+    }
+
+    .lang-ja-row {
+      font-size: 21px;
+      font-weight: 600;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      min-height: 36px;
+    }
+
+    .lang-zh-row {
+      font-size: 15px;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      min-height: 28px;
+    }
+
+    .lang-tag {
+      font-size: 10px;
+      font-weight: bold;
+      padding: 1px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .lang-tag.tag-ja { background: #e11d48; color: #fff; }
+    .lang-tag.tag-zh { background: #0284c7; color: #fff; }
+
+    /* 遮幕系統 */
+    .curtain-wrapper {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .curtain-shutter {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1.5px dashed #475569;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      font-size: 13px;
+      font-weight: bold;
+      z-index: 5;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .curtain-shutter:hover {
+      background: linear-gradient(135deg, #334155, #1e293b);
+      border-color: #60a5fa;
+      color: #fff;
+    }
+
+    .curtain-wrapper.is-open .curtain-shutter {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.95);
+    }
+
+    .cloze-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 4px;
+      padding: 1px 12px;
+      min-width: 52px;
+      height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      vertical-align: middle;
+      transition: all 0.18s ease;
+      user-select: none;
+    }
+
+    .cloze-badge.is-masked {
+      background: linear-gradient(135deg, #e11d48, #be123c);
+      color: #ffffff;
+      border: 1.5px dashed #fda4af;
+      box-shadow: 0 2px 8px rgba(225, 29, 72, 0.4);
+    }
+
+    .cloze-badge.is-masked::before { content: "❓ 點擊"; font-size: 13px; }
+    .cloze-badge.is-revealed {
+      background: linear-gradient(135deg, #059669, #047857);
+      color: #ffffff;
+      border: 1.5px solid #6ee7b7;
+      box-shadow: 0 2px 8px rgba(5, 150, 105, 0.4);
+    }
+
+    /* Control Panel */
+    .control-panel {
+      padding: 14px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .btn-main-play {
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: none;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 10px 22px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .btn-main-play:hover { transform: translateY(-1px); }
+    .btn-main-play.is-playing { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      padding: 18px 22px;
+      margin-bottom: 20px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .feature-box {
+      background: #070c18;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+      padding: 14px;
+    }
+
+    .feature-box h4 { color: #38bdf8; font-size: 0.95rem; margin-bottom: 4px; }
+    .feature-box p { font-size: 0.88rem; color: var(--text-muted); }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Top Navigation -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+      <a href="index.html" style="display: inline-flex; align-items: center; gap: 8px; color: #60a5fa; text-decoration: none; font-weight: 700; background: #0f172a; padding: 8px 16px; border-radius: 8px; border: 1px solid #1e293b; font-size: 0.92rem; transition: all 0.2s ease;">
+        <i class="fa-solid fa-arrow-left"></i> 📚 回到 941條日語文法全方位檢索庫
+      </a>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <a href="index.html" style="display: inline-flex; align-items: center; gap: 6px; color: #cbd5e1; text-decoration: none; font-size: 0.88rem; background: #0f172a; padding: 6px 12px; border-radius: 8px; border: 1px solid #1e293b;">
+          <i class="fa-solid fa-code-compare text-yellow-400"></i> 近義文法對照專區
+        </a>
+        <span style="font-size: 0.82rem; color: #64748b; background: rgba(255,255,255,0.06); padding: 4px 10px; border-radius: 9999px;">
+          🌐 免安裝線上網頁版 v7.0
+        </span>
+      </div>
+    </div>
+
+    <header>
+      <h1>🇯🇵 日語雙語「連續自動滾動＋多功能遮幕＋一鍵縮小」旗艦教學台 v7.0</h1>
+      <p>無限循環滾動不卡死・一鍵縮小為迷你條不擋畫面・上面日文／下面中文遮幕・說完兩句自動暫停</p>
+    </header>
+
+    
+    <!-- Real YouTube Video Player Loader -->
+    <div class="card" style="margin-bottom: 16px; padding: 14px 18px; background: #0f172a; border: 1px solid #1e293b;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
+        <span style="font-weight: 800; font-size: 0.95rem; color: #38bdf8; display: flex; align-items: center; gap: 8px;">
+          <i class="fa-brands fa-youtube" style="color: #ef4444; font-size: 1.2rem;"></i> 載入 YouTube 線上影片進行字幕挖空／遮幕練習
+        </span>
+        <span style="font-size: 0.82rem; color: #94a3b8;">支援任何 YouTube 影片 ID 或完整網址</span>
+      </div>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <input type="text" id="yt-url-input" placeholder="貼上任意 YouTube 網址 (如 https://www.youtube.com/watch?v=... 或 影片ID)" style="flex: 1; min-width: 260px; padding: 8px 12px; border-radius: 8px; border: 1px solid #334155; background: #070c18; color: #f8fafc; font-size: 0.9rem; outline: none;" />
+        <button onclick="loadCustomYouTubeVideo()" style="background: #ef4444; color: white; border: none; padding: 8px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+          <i class="fa-solid fa-play"></i> 載入影片
+        </button>
+        <select id="preset-yt-select" onchange="loadPresetVideo(this.value)" style="padding: 8px 12px; border-radius: 8px; border: 1px solid #334155; background: #070c18; color: #f8fafc; font-size: 0.88rem; cursor: pointer;">
+          <option value="">🎬 精選日語學習短片推薦...</option>
+          <option value="dQw4w9WgXcQ">日語聽力日常會話精選 01</option>
+          <option value="M5QGk3LqU74">NHK 日語生活實用問答 02</option>
+          <option value="demo">🎧 切換回內建雙語教學音檔示範</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Simulated Screen -->
+    <div class="screen-area" id="screen-container">
+
+      <!-- Embedded YouTube Player Container -->
+      <div id="yt-real-player-container" style="position: absolute; inset: 0; width: 100%; height: 100%; display: none; z-index: 2;">
+        <iframe id="yt-real-iframe" src="" style="width: 100%; height: 100%; border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+
+      <div class="screen-backdrop">
+        <div style="font-size: 3rem; margin-bottom: 6px;" id="speaker-icon">🎬</div>
+        <p style="font-weight: 600; font-size: 1.1rem; color: #cbd5e1;" id="player-status-text">
+          點擊下方「▶️ 開始連續循環滾動」體驗不卡死的自動推進！
+        </p>
+        <p style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">
+          字幕框可自由拖曳・點擊「➖ 縮小」可瞬間變為迷你懸浮條
+        </p>
+      </div>
+
+      <!-- Draggable Teleprompter Subtitle Window -->
+      <div id="yt-ja-cloze-window">
+        <div class="yt-cloze-header" id="drag-handle" title="按住可任意拖曳移動此字幕框">
+          <div style="display: flex; align-items: center; gap: 8px; font-weight: bold;">
+            <button class="btn-badge" id="demo-min-btn" onclick="toggleMinimize()" style="padding:2px 8px; font-size:11px;" title="點選變小，不要一直擋在那邊">
+              ➖ 縮小
+            </button>
+            <span>🇯🇵 雙語對照滾動台</span>
+            <div class="mini-preview-text" id="demo-mini-preview">正在播放中...</div>
+          </div>
+
+          <!-- 遮幕模式切換列 (遮中文 / 遮日文 / 挖空日文 / 雙語全開) -->
+          <div class="yt-cloze-header-controls yt-cloze-header-controls-full">
+            <span style="font-size: 12px; color: #94a3b8;">遮幕：</span>
+            <button class="btn-badge active" id="mode-btn-mask-zh" onclick="setCurtainMode('mask_zh')">
+              🙈 遮中文
+            </button>
+            <button class="btn-badge" id="mode-btn-mask-ja" onclick="setCurtainMode('mask_ja')">
+              🙈 遮日文
+            </button>
+            <button class="btn-badge" id="mode-btn-cloze" onclick="setCurtainMode('cloze')">
+              🎯 挖空日文
+            </button>
+            <button class="btn-badge" id="mode-btn-all" onclick="setCurtainMode('all')">
+              👁️ 全開
+            </button>
+            <button class="btn-badge" onclick="resetWindowPosition()" title="重設位置">🔄</button>
+          </div>
+        </div>
+
+        <!-- 暫停翻譯橫幅 -->
+        <div id="status-banner">
+          ⏸️ 【已說完兩句話・自動暫停中】請學生翻譯這兩句 ➔ 點擊遮幕掀開看對照 / 按【D】或點下方按鈕繼續自動滾動！
+        </div>
+
+        <!-- 滾動字幕視窗 -->
+        <div class="rolling-viewport">
+          <div class="rolling-track" id="rolling-track">
+            <!-- Dynamically generated bilingual cards -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Playback Controls -->
+    <div class="control-panel">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button class="btn-main-play" id="btn-toggle-play" onclick="toggleEnginePlay()">
+          ▶️ 開始連續循環滾動（語音與字幕同步推進）
+        </button>
+        <button class="btn-badge" onclick="forceNextSentence()" style="padding: 9px 14px; font-size: 13px;">
+          ⏭️ 強制下一句 (D)
+        </button>
+        <button class="btn-badge" onclick="revealAllCurtains()" style="padding: 9px 14px; font-size: 13px;">
+          👁️ 掀開所有遮幕 (空白鍵)
+        </button>
+        <button class="btn-badge" onclick="hideAllCurtains()" style="padding: 9px 14px; font-size: 13px;">
+          🙈 全部蓋上
+        </button>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="font-size: 13px; color: #94a3b8;">暫停規則：</span>
+        <select id="ap-mode-select" onchange="changeAutoPauseMode()" style="background: #1e293b; border: 1px solid #475569; color: white; padding: 6px 10px; border-radius: 6px; font-size: 13px;">
+          <option value="every_2">⏸️ 說完 2 句自動暫停（推薦翻譯）</option>
+          <option value="every_1">⏸️ 說完 1 句自動暫停</option>
+          <option value="off">▶️ 連續無限滾動不暫停</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Features Explanation -->
+    <div class="card">
+      <h3 style="color: #38bdf8; margin-bottom: 8px;">🌟 針對老師三大最新要求的全新升級：</h3>
+      <div class="feature-grid">
+        <div class="feature-box">
+          <h4>🔄 1. 無限循環推進，不再卡在第一句</h4>
+          <p>加入了「無限循環輪播機制」：第 1 句 ➔ 第 2 句 ➔ (暫停翻譯) ➔ 第 3 句 ➔ 第 4 句 ➔ ... 播完最後一句會<strong>自動平滑循環回到第一句</strong>，絕不再卡死不動！</p>
+        </div>
+        <div class="feature-box">
+          <h4>🪟 2. 一鍵縮小為「迷你條」（不擋畫面）</h4>
+          <p>點擊頂部的 <strong>`[ ➖ 縮小 ]`</strong>，整個大框框會瞬間收合為 32px 的小膠囊懸浮條，裡面僅顯示當前一句日文，不擋畫面！想看全貌時點 <strong>`[ ⤢ 展開 ]`</strong> 即可！</p>
+        </div>
+        <div class="feature-box">
+          <h4>🎙️ 3. 支援無字幕影片「Live 即時聽辨」</h4>
+          <p>擴充功能在 YouTube 上若偵測到影片原本沒字幕，可一鍵開啟 <strong>`[ 🎙️ Live 聽辨 ]`</strong>，透過瀏覽器原生即時語音辨識技術直接把日語音訊轉為雙語滾動字幕！</p>
+        </div>
+        <div class="feature-box">
+          <h4>🙈 4. 多功能遮幕切換</h4>
+          <p>上面日文、下面中文。可一鍵切換「遮中文（練翻譯）」、「遮日文（練盲聽）」、「挖空日文（練文法）」或「雙語全開」。</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const BILINGUAL_SCRIPT = [
+      { ja: "昨日はとてもいい天気でしたね。", zh: "昨天天氣真的很不錯呢。" },
+      { ja: "だから友達と公園に散歩に行きました。", zh: "所以我和朋友去公園散步了。" },
+      { ja: "公園の近くで新しいカフェを見つけました。", zh: "在公園附近發現了一家新開的咖啡廳。" },
+      { ja: "コーヒーもケーキもとても美味しかったです。", zh: "咖啡和蛋糕都非常美味。" },
+      { ja: "店員さんもとても親切に案内してくれました。", zh: "店員也非常親切地為我們介紹。" },
+      { ja: "来週の日曜日もまた友達と行こうと思います。", zh: "下個星期天我打算再跟朋友去一次。" }
+    ];
+
+    const JP_PARTICLES = new Set(['は', 'が', 'を', 'に', 'で', 'へ', 'と', 'から', 'まで', 'より', 'も', 'ね', 'よ', 'か', 'の']);
+    const segmenter = new Intl.Segmenter('ja', { granularity: 'word' });
+
+    let currentFocusIndex = 0;
+    let isPlaying = false;
+    let playTimer = null;
+    let autoPauseMode = 'every_2';
+    let sentencesSincePause = 0;
+    let curtainMode = 'mask_zh';
+    let isMinimized = false;
+
+    function getDeterministicHash(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash |= 0;
+      }
+      return Math.abs(hash);
+    }
+
+    function selectStableTargets(validWords, sentenceText) {
+      const total = validWords.length;
+      if (total <= 2) return new Set([0]);
+
+      const hash = getDeterministicHash(sentenceText);
+      const targetSet = new Set();
+
+      const mid = Math.floor(total / 2);
+      const firstHalf = validWords.slice(0, mid);
+      const secondHalf = validWords.slice(mid);
+
+      let firstChoice = firstHalf.find(w => w.word.length >= 2 && !JP_PARTICLES.has(w.word));
+      if (!firstChoice && firstHalf.length > 0) firstChoice = firstHalf[hash % firstHalf.length];
+      if (firstChoice) targetSet.add(firstChoice.index);
+
+      let secondChoice = [...secondHalf].reverse().find(w => w.word.length >= 2 && !JP_PARTICLES.has(w.word));
+      if (!secondChoice && secondHalf.length > 0) secondChoice = secondHalf[hash % secondHalf.length];
+      if (secondChoice && secondChoice.index !== firstChoice?.index) targetSet.add(secondChoice.index);
+
+      if (targetSet.size < 2 && total >= 2) {
+        for (let i = 0; i < total; i++) {
+          const idx = validWords[i].index;
+          if (!targetSet.has(idx)) {
+            targetSet.add(idx);
+            if (targetSet.size === 2) break;
+          }
+        }
+      }
+      return targetSet;
+    }
+
+    function toggleMinimize() {
+      isMinimized = !isMinimized;
+      const win = document.getElementById('yt-ja-cloze-window');
+      win.classList.toggle('is-minimized', isMinimized);
+      document.getElementById('demo-min-btn').textContent = isMinimized ? '⤢ 展開' : '➖ 縮小';
+    }
+
+    function buildBilingualCards() {
+      const track = document.getElementById('rolling-track');
+      track.innerHTML = '';
+
+      BILINGUAL_SCRIPT.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = `bilingual-card ${idx === currentFocusIndex ? 'is-focus' : (idx < currentFocusIndex ? 'is-past' : '')}`;
+        card.id = `bilingual-card-${idx}`;
+
+        // 1. 日文行
+        const jaRow = document.createElement('div');
+        jaRow.className = 'lang-ja-row';
+        jaRow.innerHTML = `<span class="lang-tag tag-ja">日</span>`;
+
+        if (curtainMode === 'mask_ja') {
+          jaRow.innerHTML += `
+            <div class="curtain-wrapper" onclick="this.classList.toggle('is-open')">
+              <div class="curtain-shutter">🙈 [點擊掀開日文字幕]</div>
+              <span>${escapeHtml(item.ja)}</span>
+            </div>
+          `;
+        } else if (curtainMode === 'cloze') {
+          const segments = Array.from(segmenter.segment(item.ja));
+          const valids = [];
+          segments.forEach((seg, i) => {
+            const w = seg.segment.trim();
+            if (w && !/^[、。！？\s.,!?]+$/.test(w)) valids.push({ index: i, word: w });
+          });
+          const targets = selectStableTargets(valids, item.ja);
+
+          const jaContent = document.createElement('span');
+          segments.forEach((seg, i) => {
+            const w = seg.segment;
+            if (targets.has(i)) {
+              const badge = document.createElement('span');
+              badge.className = 'cloze-badge is-masked';
+              badge.setAttribute('data-answer', w);
+              badge.onclick = (e) => {
+                e.stopPropagation();
+                if (badge.classList.contains('is-masked')) {
+                  badge.classList.remove('is-masked');
+                  badge.classList.add('is-revealed');
+                  badge.textContent = w;
+                } else {
+                  badge.classList.remove('is-revealed');
+                  badge.classList.add('is-masked');
+                  badge.textContent = '';
+                }
+              };
+              jaContent.appendChild(badge);
+            } else {
+              jaContent.appendChild(document.createTextNode(w));
+            }
+          });
+          jaRow.appendChild(jaContent);
+        } else {
+          jaRow.appendChild(document.createTextNode(item.ja));
+        }
+
+        // 2. 中文行
+        const zhRow = document.createElement('div');
+        zhRow.className = 'lang-zh-row';
+        zhRow.innerHTML = `<span class="lang-tag tag-zh">中</span>`;
+
+        if (curtainMode === 'mask_zh') {
+          zhRow.innerHTML += `
+            <div class="curtain-wrapper" onclick="this.classList.toggle('is-open')">
+              <div class="curtain-shutter">🙈 [點擊掀開中文翻譯]</div>
+              <span>${escapeHtml(item.zh)}</span>
+            </div>
+          `;
+        } else {
+          zhRow.appendChild(document.createTextNode(item.zh));
+        }
+
+        card.appendChild(jaRow);
+        card.appendChild(zhRow);
+        track.appendChild(card);
+      });
+
+      scrollTrackToFocus();
+    }
+
+    function scrollTrackToFocus() {
+      const track = document.getElementById('rolling-track');
+      const offset = currentFocusIndex * 92;
+      track.style.transform = `translateY(-${Math.max(0, offset - 10)}px)`;
+
+      document.querySelectorAll('.bilingual-card').forEach((card, idx) => {
+        card.classList.toggle('is-focus', idx === currentFocusIndex);
+        card.classList.toggle('is-past', idx < currentFocusIndex);
+      });
+
+      // 更新迷你預覽條文字
+      if (BILINGUAL_SCRIPT[currentFocusIndex]) {
+        document.getElementById('demo-mini-preview').textContent = BILINGUAL_SCRIPT[currentFocusIndex].ja;
+      }
+    }
+
+    function setCurtainMode(mode) {
+      curtainMode = mode;
+      document.querySelectorAll('.yt-cloze-header-controls .btn-badge').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(`mode-btn-${mode.replace('_', '-')}`);
+      if (activeBtn) activeBtn.classList.add('active');
+      buildBilingualCards();
+    }
+
+    function revealAllCurtains() {
+      document.querySelectorAll('.curtain-wrapper').forEach(w => w.classList.add('is-open'));
+      document.querySelectorAll('.cloze-badge.is-masked').forEach(b => {
+        b.classList.remove('is-masked');
+        b.classList.add('is-revealed');
+        b.textContent = b.getAttribute('data-answer');
+      });
+    }
+
+    function hideAllCurtains() {
+      document.querySelectorAll('.curtain-wrapper').forEach(w => w.classList.remove('is-open'));
+      document.querySelectorAll('.cloze-badge.is-revealed').forEach(b => {
+        b.classList.remove('is-revealed');
+        b.classList.add('is-masked');
+        b.textContent = '';
+      });
+    }
+
+    function changeAutoPauseMode() {
+      autoPauseMode = document.getElementById('ap-mode-select').value;
+      sentencesSincePause = 0;
+    }
+
+    function forceNextSentence() {
+      if (playTimer) clearTimeout(playTimer);
+      currentFocusIndex = (currentFocusIndex + 1) % BILINGUAL_SCRIPT.length;
+      scrollTrackToFocus();
+      document.getElementById('status-banner').style.display = 'none';
+      if (isPlaying) {
+        advanceSentence();
+      }
+    }
+
+    // --------------------------------------------------------------------------
+    // 無限循環滾動引擎
+    // --------------------------------------------------------------------------
+    function toggleEnginePlay() {
+      if (isPlaying) {
+        pauseEngine();
+      } else {
+        startEngine();
+      }
+    }
+
+    function startEngine() {
+      isPlaying = true;
+      document.getElementById('status-banner').style.display = 'none';
+      const btn = document.getElementById('btn-toggle-play');
+      btn.textContent = '⏸️ 暫停滾動';
+      btn.classList.add('is-playing');
+      document.getElementById('player-status-text').textContent = '🔊 自動連續滾動中...無限循環推進';
+      document.getElementById('speaker-icon').textContent = '🗣️';
+
+      advanceSentence();
+    }
+
+    function pauseEngine() {
+      isPlaying = false;
+      if (playTimer) clearTimeout(playTimer);
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+
+      const btn = document.getElementById('btn-toggle-play');
+      btn.textContent = '▶️ 繼續連續循環滾動播放';
+      btn.classList.remove('is-playing');
+      document.getElementById('player-status-text').textContent = '⏸️ 滾動已暫停（可翻譯思考）';
+      document.getElementById('speaker-icon').textContent = '🎬';
+    }
+
+    function advanceSentence() {
+      if (!isPlaying) return;
+
+      // 無限循環：到底時回到第 0 句
+      if (currentFocusIndex >= BILINGUAL_SCRIPT.length) {
+        currentFocusIndex = 0;
+      }
+
+      scrollTrackToFocus();
+      const currentItem = BILINGUAL_SCRIPT[currentFocusIndex];
+
+      let speechDuration = Math.max(2600, currentItem.ja.length * 270);
+
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(currentItem.ja);
+        utterance.lang = 'ja-JP';
+        utterance.rate = 0.95;
+        window.speechSynthesis.speak(utterance);
+      }
+
+      playTimer = setTimeout(() => {
+        if (!isPlaying) return;
+        sentencesSincePause++;
+        currentFocusIndex = (currentFocusIndex + 1) % BILINGUAL_SCRIPT.length;
+
+        if (autoPauseMode === 'every_2' && sentencesSincePause >= 2) {
+          pauseEngine();
+          sentencesSincePause = 0;
+          document.getElementById('status-banner').style.display = 'block';
+          document.getElementById('player-status-text').textContent = '⏸️ 已播完兩句，自動暫停！請學生翻譯並掀開遮幕對照';
+        } else if (autoPauseMode === 'every_1' && sentencesSincePause >= 1) {
+          pauseEngine();
+          sentencesSincePause = 0;
+          document.getElementById('status-banner').style.display = 'block';
+          document.getElementById('player-status-text').textContent = '⏸️ 已播完一句，自動暫停！請學生翻譯並掀開遮幕對照';
+        } else {
+          advanceSentence();
+        }
+      }, speechDuration);
+    }
+
+    function resetWindowPosition() {
+      const win = document.getElementById('yt-ja-cloze-window');
+      win.style.left = '50%';
+      win.style.top = 'auto';
+      win.style.bottom = '24px';
+      win.style.transform = 'translateX(-50%)';
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    window.addEventListener('keydown', (e) => {
+      const activeTag = document.activeElement ? document.activeElement.tagName : '';
+      if (['INPUT', 'TEXTAREA'].includes(activeTag)) return;
+
+      if (e.key.toLowerCase() === 'd') {
+        forceNextSentence();
+      } else if (e.code === 'Space') {
+        e.preventDefault();
+        revealAllCurtains();
+      }
+    });
+
+    function initDraggable() {
+      const win = document.getElementById('yt-ja-cloze-window');
+      const handle = document.getElementById('drag-handle');
+      const container = document.getElementById('screen-container');
+
+      let isDragging = false;
+      let offset = { x: 0, y: 0 };
+
+      handle.addEventListener('mousedown', (e) => {
+        if (['SELECT', 'BUTTON', 'OPTION'].includes(e.target.tagName)) return;
+        isDragging = true;
+        win.classList.add('is-dragging');
+
+        const winRect = win.getBoundingClientRect();
+        offset.x = e.clientX - winRect.left;
+        offset.y = e.clientY - winRect.top;
+
+        const onMouseMove = (moveEvent) => {
+          if (!isDragging) return;
+          const cRect = container.getBoundingClientRect();
+          let left = moveEvent.clientX - cRect.left - offset.x;
+          let top = moveEvent.clientY - cRect.top - offset.y;
+
+          left = Math.max(10, Math.min(cRect.width - winRect.width - 10, left));
+          top = Math.max(10, Math.min(cRect.height - winRect.height - 10, top));
+
+          win.style.left = `${left}px`;
+          win.style.top = `${top}px`;
+          win.style.bottom = 'auto';
+          win.style.transform = 'none';
+        };
+
+        const onMouseUp = () => {
+          isDragging = false;
+          win.classList.remove('is-dragging');
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', onMouseUp);
+        };
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+      });
+    }
+
+    
+    // --------------------------------------------------------------------------
+    // YouTube 線上影片載入邏輯
+    // --------------------------------------------------------------------------
+    function extractYouTubeId(urlOrId) {
+      if (!urlOrId) return '';
+      urlOrId = urlOrId.trim();
+      const match = urlOrId.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+      if (match && match[1]) return match[1];
+      if (/^[\w-]{11}$/.test(urlOrId)) return urlOrId;
+      return '';
+    }
+
+    function loadCustomYouTubeVideo() {
+      const input = document.getElementById('yt-url-input');
+      const val = input ? input.value : '';
+      const videoId = extractYouTubeId(val);
+      if (!videoId) {
+        alert('請輸入有效的 YouTube 影片網址或 11 碼影片 ID！');
+        return;
+      }
+      playYouTubeVideo(videoId);
+    }
+
+    function loadPresetVideo(val) {
+      if (!val) return;
+      if (val === 'demo') {
+        const playerContainer = document.getElementById('yt-real-player-container');
+        const iframe = document.getElementById('yt-real-iframe');
+        if (playerContainer) playerContainer.style.display = 'none';
+        if (iframe) iframe.src = '';
+        document.getElementById('player-status-text').textContent = '已切換回內建示範模式，點擊下方「開始連續循環滾動」！';
+        return;
+      }
+      playYouTubeVideo(val);
+    }
+
+    function playYouTubeVideo(videoId) {
+      const playerContainer = document.getElementById('yt-real-player-container');
+      const iframe = document.getElementById('yt-real-iframe');
+      if (!playerContainer || !iframe) return;
+
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0`;
+      playerContainer.style.display = 'block';
+      document.getElementById('player-status-text').textContent = `🎬 正在播放 YouTube 影片 (${videoId})，請使用浮動遮幕進行練習！`;
+
+      // 自動開始字幕推進
+      if (!isPlaying) {
+        startEngine();
+      }
+    }
+
+
+    window.addEventListener('DOMContentLoaded', () => {
+      buildBilingualCards();
+      initDraggable();
+    });
+  </script>
+</body>
+</html>
