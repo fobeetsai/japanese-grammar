@@ -1058,6 +1058,537 @@
             .filter-panel { padding: 1rem; }
             .drawer-container { max-width: 100%; }
         }
+    
+        /* Main Navigation Tabs */
+        .main-tabs-nav {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.75rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .main-tab-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.75rem 1.4rem;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .main-tab-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .main-tab-btn.active {
+            background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
+        }
+
+        .tab-badge-new {
+            background: #ef4444;
+            color: white;
+            font-size: 0.72rem;
+            padding: 0.15rem 0.45rem;
+            border-radius: 9999px;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.4);
+            animation: pulse-badge 2s infinite ease-in-out;
+        }
+
+        .tab-badge-count {
+            background: rgba(0, 0, 0, 0.08);
+            color: inherit;
+            font-size: 0.78rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 9999px;
+        }
+
+        .main-tab-btn.active .tab-badge-count {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        /* Compare Workspace Styles */
+        .compare-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .compare-header-card {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(59, 130, 246, 0.04) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.25);
+            border-radius: var(--radius);
+            padding: 1.4rem 1.6rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+        }
+
+        .compare-header-title {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .compare-header-title h2 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .compare-header-title p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Curated Presets Bar */
+        .compare-presets-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.2rem 1.4rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .compare-presets-label {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            margin-bottom: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .compare-presets-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+        }
+
+        .preset-pill-btn {
+            background: var(--bg-card-sub);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 0.45rem 0.9rem;
+            border-radius: 9999px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .preset-pill-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .preset-pill-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Selector & Active Compare Chips */
+        .compare-selector-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.2rem 1.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .compare-search-row {
+            display: flex;
+            gap: 0.75rem;
+            position: relative;
+            flex-wrap: wrap;
+        }
+
+        .compare-search-input-wrap {
+            flex: 1;
+            min-width: 280px;
+            position: relative;
+        }
+
+        .compare-search-input-wrap input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.6rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background: var(--bg-main);
+            color: var(--text-main);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .compare-search-input-wrap input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .compare-search-input-wrap .search-icon {
+            position: absolute;
+            left: 0.9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .compare-dropdown-results {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            max-height: 280px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+
+        .compare-dropdown-item {
+            padding: 0.65rem 1rem;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.15s ease;
+        }
+
+        .compare-dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .compare-dropdown-item:hover {
+            background: var(--primary-light);
+        }
+
+        .compare-chips-row {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .compare-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-light);
+            color: #1e40af;
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            border-radius: 9999px;
+            padding: 0.35rem 0.85rem;
+            font-size: 0.88rem;
+            font-weight: 700;
+        }
+
+        [data-theme="dark"] .compare-chip {
+            background: #1e3a8a;
+            color: #93c5fd;
+            border-color: #3b82f6;
+        }
+
+        .compare-chip-remove {
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: color 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .compare-chip-remove:hover {
+            color: var(--danger);
+        }
+
+        /* Compare Grid Matrix */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 1.25rem;
+            align-items: stretch;
+        }
+
+        .compare-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .compare-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(37, 99, 235, 0.4);
+        }
+
+        .compare-card-header {
+            padding: 1.25rem 1.4rem;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, var(--bg-card-sub) 0%, var(--bg-card) 100%);
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            position: relative;
+        }
+
+        .compare-card-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .compare-card-title {
+            font-size: 1.55rem;
+            font-weight: 900;
+            font-family: 'Noto Sans JP', sans-serif;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        .compare-card-actions {
+            display: flex;
+            gap: 0.35rem;
+            align-items: center;
+        }
+
+        .compare-icon-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.35rem;
+            font-size: 1.05rem;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .compare-icon-btn:hover {
+            color: var(--primary);
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .compare-card-body {
+            padding: 1.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.15rem;
+            flex: 1;
+        }
+
+        .compare-block-label {
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .compare-form-box {
+            background: var(--primary-light);
+            color: #1e40af;
+            border-radius: 8px;
+            padding: 0.65rem 0.85rem;
+            font-size: 0.92rem;
+            font-weight: 700;
+            line-height: 1.5;
+            font-family: 'Noto Sans JP', sans-serif;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+        }
+
+        [data-theme="dark"] .compare-form-box {
+            background: #172b4d;
+            color: #bfdbfe;
+            border-color: #2563eb;
+        }
+
+        .compare-meaning-box {
+            font-size: 0.98rem;
+            font-weight: 600;
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+
+        .compare-nuance-card {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 10px;
+            padding: 0.85rem 1rem;
+            color: #92400e;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        [data-theme="dark"] .compare-nuance-card {
+            background: #2b220d;
+            border-color: #78350f;
+            color: #fde68a;
+        }
+
+        .compare-nuance-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #b45309;
+            background: #fef3c7;
+            padding: 0.2rem 0.55rem;
+            border-radius: 6px;
+            width: fit-content;
+        }
+
+        [data-theme="dark"] .compare-nuance-badge {
+            background: #451a03;
+            color: #fcd34d;
+        }
+
+        .compare-nuance-text {
+            font-size: 0.9rem;
+            line-height: 1.55;
+            font-weight: 500;
+        }
+
+        .compare-example-card {
+            background: var(--bg-card-sub);
+            border-left: 4px solid var(--secondary);
+            border-radius: 0 8px 8px 0;
+            padding: 0.85rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+
+        .compare-example-jp {
+            font-size: 1.05rem;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 600;
+            line-height: 1.7;
+            color: var(--text-main);
+        }
+
+        .compare-example-zh {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .compare-card-footer {
+            padding: 0.9rem 1.4rem;
+            background: var(--bg-card-sub);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Drawer In-Line Comparison Section */
+        .drawer-similar-section {
+            margin-top: 1.25rem;
+            border-top: 2px dashed var(--border);
+            padding-top: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .btn-compare-all {
+            background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%);
+            color: white;
+            border: none;
+            padding: 0.35rem 0.85rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-compare-all:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+        }
+
+        .drawer-similar-card {
+            background: var(--bg-card-sub);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .drawer-similar-card:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
     </style>
 </head>
 <body>
@@ -1109,6 +1640,20 @@
 
     <!-- Main Container -->
     <main class="main-container">
+
+        <!-- Main Navigation Tabs -->
+        <div class="main-tabs-nav" id="mainTabsNav">
+            <button class="main-tab-btn active" id="tabBrowseBtn" onclick="switchMainTab('browse')">
+                <i class="fa-solid fa-list-check"></i> 全部文法索引檢索 (941條)
+            </button>
+            <button class="main-tab-btn" id="tabCompareBtn" onclick="switchMainTab('compare')">
+                <i class="fa-solid fa-code-compare"></i> 類義詞・近義文法前後比較專區 <span class="tab-badge-new">NEW</span>
+            </button>
+        </div>
+
+        <!-- Browse Mode Section -->
+        <div id="browseSection">
+
         
         <!-- Filter Panel -->
         <section class="filter-panel">
@@ -1210,7 +1755,66 @@
         <!-- Pagination -->
         <div class="pagination-wrap" id="paginationWrap"></div>
 
-    </main>
+    
+        </div>
+        <!-- End Browse Mode Section -->
+
+        <!-- Compare Workspace Section -->
+        <div class="compare-section" id="compareSection" style="display: none;">
+            
+            <!-- Compare Header Banner -->
+            <div class="compare-header-card">
+                <div class="compare-header-title">
+                    <h2><i class="fa-solid fa-code-compare"></i> 類義詞・近義文法深度辨析與前後對照</h2>
+                    <p>將相近、易混淆的文法條目並排橫向展開，精準對比「接續形式差異」、「說話者主客觀語感」、「感情色彩」與「實用情境例文」。</p>
+                </div>
+                <div style="display: flex; gap: 0.6rem; align-items: center;">
+                    <button class="pill-btn" onclick="resetCompareToDefault()" title="恢復熱門預設組">
+                        <i class="fa-solid fa-rotate-left"></i> 重置預設組
+                    </button>
+                </div>
+            </div>
+
+            <!-- Curated Topics Preset Pills -->
+            <div class="compare-presets-panel">
+                <div class="compare-presets-label">
+                    <i class="fa-solid fa-fire text-red-500"></i> 16 大常考易混淆類義文法主題（點擊即刻切換並排比對）：
+                </div>
+                <div class="compare-presets-pills" id="comparePresetPills">
+                    <!-- Injected dynamically -->
+                </div>
+            </div>
+
+            <!-- Compare Selector & Active Chips Bar -->
+            <div class="compare-selector-bar">
+                <div class="compare-search-row">
+                    <div class="compare-search-input-wrap">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="compareSearchInput" placeholder="搜尋欲比對的文法（如：わけ、たばかり、のに、そうだ、から...）" autocomplete="off">
+                        <div class="compare-dropdown-results" id="compareDropdown"></div>
+                    </div>
+                    <button class="pill-btn" id="btnAutoDetectSimilar" onclick="autoDetectCurrentSimilar()" title="根據當前選取的文法自動探測近義詞">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> 智慧探測並排近義詞
+                    </button>
+                </div>
+
+                <div class="compare-chips-row">
+                    <span style="font-size: 0.88rem; font-weight: 700; color: var(--text-muted);">
+                        <i class="fa-solid fa-layer-group"></i> 當前並排比對中（最多 4 條）：
+                    </span>
+                    <div id="compareActiveChips" style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;"></div>
+                </div>
+            </div>
+
+            <!-- Comparison Cards Matrix -->
+            <div class="compare-grid" id="compareGrid">
+                <!-- Dynamically Injected -->
+            </div>
+
+        </div>
+        <!-- End Compare Workspace Section -->
+
+</main>
 
     <!-- In-Page Detail Drawer -->
     <div class="drawer-overlay" id="detailDrawerOverlay">
@@ -1799,6 +2403,9 @@
                         <button class="btn-card-action btn-view-detail" onclick="openDetailById(${item.id})" title="在頁內即時查看完整深度詳解">
                             <i class="fa-solid fa-book-open"></i> 查看完整詳解
                         </button>
+                        <button class="btn-card-action" onclick="openInCompareWorkspace(${item.id})" title="在對照專區與類似文法並排深入比較" style="color: var(--primary); font-weight: 700;">
+                            <i class="fa-solid fa-code-compare"></i> 類義對照
+                        </button>
                         <button class="btn-card-action" onclick="copyToClipboard('${item.title}', event)" title="複製文法名稱">
                             <i class="fa-regular fa-copy"></i>
                         </button>
@@ -1839,6 +2446,9 @@
                     <td style="text-align: center;" onclick="event.stopPropagation()">
                         <button class="btn-card-action btn-view-detail" onclick="openDetailById(${item.id})" style="padding: 0.35rem 0.65rem; font-size: 0.8rem;">
                             詳解
+                        </button>
+                        <button class="btn-card-action" onclick="openInCompareWorkspace(${item.id})" style="padding: 0.35rem 0.55rem; font-size: 0.8rem; margin-left: 0.25rem; color: var(--primary);" title="在對照專區與類似文法前後比對">
+                            <i class="fa-solid fa-code-compare"></i>
                         </button>
                     </td>
                 </tr>
@@ -1974,6 +2584,9 @@
                         ${item.note}
                     </div>
                 </div>` : ''}
+
+                <!-- Similar Grammar Section -->
+                ${renderDrawerSimilarHtml(item)}
 
                 <!-- Fast Actions -->
                 <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem;">
@@ -2277,7 +2890,909 @@
             btnToTop.addEventListener('click', () => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
+
+            // Initialize Compare Search
+            initCompareSearch();
         });
+    
+        // ==========================================
+        // 類義詞・近義文法前後比較專區引擎 (Compare Engine)
+        // ==========================================
+
+        const CURATED_COMPARE_GROUPS = [
+  {
+    "id": "time_just_done",
+    "title": "時間剛好：たばかり vs たところ vs たて",
+    "icon": "fa-clock",
+    "desc": "皆表示動作剛完成，但「主觀感受」與「客觀時間」截然不同",
+    "itemIds": [
+      717,
+      487,
+      275
+    ],
+    "nuances": {
+      "275": {
+        "keyword": "新鮮出爐、剛做好的狀態",
+        "detail": "接續為「動詞連用形（ます形去ます）＋たて」。專指事物剛完成時最新鮮、最初期的良好或熱騰騰狀態（如：焼きたて、出来たて）。"
+      },
+      "487": {
+        "keyword": "客觀上剛剛才發生（幾秒/幾分鐘前）",
+        "detail": "強調動作在客觀時間軸上剛落下帷幕，時間間隔極短。不能接名詞修飾（不可說 *ところの服）。常與「今」「ちょうど」搭配。"
+      },
+      "717": {
+        "keyword": "主觀覺得才剛過不久",
+        "detail": "即使客觀時間已過數月或數年，只要說話者心裡覺得才剛發生就可使用。可接名詞（〜たばかりの＋N）。後項可接各種時態與語氣。"
+      }
+    }
+  },
+  {
+    "id": "cause_reason",
+    "title": "原因理由：から vs ので vs ため vs せいで vs おかげで",
+    "icon": "fa-circle-question",
+    "desc": "日語最經典原因表現：主觀意志 vs 客觀委婉 vs 消極怪罪 vs 積極感謝",
+    "itemIds": [
+      87,
+      295,
+      212,
+      40,
+      834,
+      684
+    ],
+    "nuances": {
+      "40": {
+        "keyword": "積極感謝（多虧了…幸好）",
+        "detail": "帶來好的結果、成就或幸運，帶有慶幸與感謝的心情（偶爾反諷）。"
+      },
+      "87": {
+        "keyword": "強調正是因為（強烈主觀意志）",
+        "detail": "「〜からこそ」強調唯一或最重要的理由，後項多為說話者的強烈主張、信念或意志。"
+      },
+      "212": {
+        "keyword": "消極怪罪（都是因為…害得）",
+        "detail": "導致負面、令人不滿或倒楣的不良後果，帶有推卸責任或埋怨、遺憾的強烈感情色彩。"
+      },
+      "295": {
+        "keyword": "客觀因果（書面硬語）",
+        "detail": "客觀敘述必然或重大的因果關係，語氣生硬嚴肅，多用於公文、新聞或論文。後項不可接命令、請求或意志。"
+      },
+      "684": {
+        "keyword": "重大客觀起因/媒介",
+        "detail": "表示引發大規模事件、自然災害或重大變革的根本原因（如地震、事故引起）。"
+      },
+      "834": {
+        "keyword": "口語委婉開脫辯解",
+        "detail": "口語中向對方解釋遲到、失敗或未能赴約的個人客觀原因，尋求對方的諒解，語氣委婉。"
+      }
+    }
+  },
+  {
+    "id": "contrast_reverse",
+    "title": "逆接轉折：のに vs くせに vs にもかかわらず vs ものの",
+    "icon": "fa-shuffle",
+    "desc": "皆表示轉折逆接，但蘊含的說話者情感、禮貌程度與書面色彩差異巨大",
+    "itemIds": [
+      700,
+      115,
+      679,
+      838
+    ],
+    "nuances": {
+      "115": {
+        "keyword": "輕蔑責備（明明…卻偏偏…）",
+        "detail": "前後項主語必須相同。帶有強烈的指責、蔑視、看不起對方的負面情緒（如小氣、不懂裝懂）。"
+      },
+      "679": {
+        "keyword": "正式書面（儘管…依然…）",
+        "detail": "正式書面或演講用語。強調前項是極度困難或理應阻止的狀況，後項卻照樣發生，不受前項任何影響。"
+      },
+      "700": {
+        "keyword": "事與願違（遺憾、驚訝、抱怨）",
+        "detail": "前項成立的情況下，後項理應發生卻未發生。帶有事出意料的不滿或遺憾。後項不能接意志、命令或請求。"
+      },
+      "838": {
+        "keyword": "承認事實但轉折（雖然…但是…）",
+        "detail": "接在既定客觀事實後面，承認前半句屬實，但後半句卻無法達到預期的充分效果。"
+      }
+    }
+  },
+  {
+    "id": "wake_series",
+    "title": "わけ系列：わけだ vs わけではない vs わけがない vs わけにはいかない",
+    "icon": "fa-diagram-project",
+    "desc": "四大「わけ」語法深度辨析：理解順理成章 vs 部分否定 vs 絕不可能 vs 心理常理限制",
+    "itemIds": [
+      894,
+      895,
+      892,
+      897
+    ],
+    "nuances": {
+      "892": {
+        "keyword": "絕不可能、哪有這種道理（強烈否定）",
+        "detail": "從常理或邏輯推斷，斷定「絕對不可能發生某事」（相當於 はずがない）。"
+      },
+      "894": {
+        "keyword": "原來如此、難怪（順理成章）",
+        "detail": "知道了理由後恍然大悟，認為該結果乃理所當然、合乎邏輯。"
+      },
+      "895": {
+        "keyword": "並不是說…（部分否定）",
+        "detail": "緩和語氣，澄清誤解。「不是完全討厭，只是不太想吃」等折衷表達。"
+      },
+      "897": {
+        "keyword": "礙於常理不能這樣做（道德/責任限制）",
+        "detail": "受限於社會常識、道德責任或立場壓力，心理上覺得「不能這麼做 / 不得不這麼做」。"
+      }
+    }
+  },
+  {
+    "id": "hazu_vs_wake",
+    "title": "はず vs わけ：はずがない vs わけがない vs はずだ",
+    "icon": "fa-scale-balanced",
+    "desc": "推斷確信 (はず) 與道理因果 (わけ) 的微妙界線",
+    "itemIds": [
+      726,
+      892,
+      727,
+      894
+    ],
+    "nuances": {
+      "726": {
+        "keyword": "根據客觀情報斷定絕不可能",
+        "detail": "根據已知的情報、預定或客觀證據，主觀推測斷定絕對不會有此事。"
+      },
+      "727": {
+        "keyword": "理應會如此（預期必定發生）",
+        "detail": "根據預約、安排或合理推算，預計此時此刻應該已經發生了。"
+      },
+      "892": {
+        "keyword": "根據常理邏輯根本不通",
+        "detail": "強調事情違背自然規律、基本邏輯或客觀道理，從根源上全盤否定。"
+      },
+      "894": {
+        "keyword": "果真如此、難怪（驗證合理性）",
+        "detail": "看到事實並對照原因後發出「啊，難怪會這樣」的頓悟感慨。"
+      }
+    }
+  },
+  {
+    "id": "conjecture_report",
+    "title": "推量傳聞：そうだ（樣態） vs そうだ（傳聞） vs ようだ vs らしい",
+    "icon": "fa-eye",
+    "desc": "一眼直觀印象 vs 轉述聽聞 vs 五感綜合推斷 vs 外來線索推測",
+    "itemIds": [
+      227,
+      226,
+      854,
+      887
+    ],
+    "nuances": {
+      "226": {
+        "keyword": "純粹轉述聽聞（據說、聽說）",
+        "detail": "接普通形。原原本本傳達他人或媒體的情報，不摻雜自己的推論。"
+      },
+      "227": {
+        "keyword": "直觀目視樣態（看起來快要…）",
+        "detail": "接動詞ます形去ます/形容詞語幹。僅憑當前外表視覺，感到某變化即將發生（如：今にも雨が降りそうだ）。"
+      },
+      "854": {
+        "keyword": "五感與直覺綜合推斷（彷彿、好像）",
+        "detail": "根據自己眼耳鼻舌身的實際感受或現場氛圍，做出的主觀推量或生動比喻。"
+      },
+      "887": {
+        "keyword": "依據外來線索的可信推論（看樣子似乎）",
+        "detail": "根據傳聞、報導、他人客觀跡象或客觀線索，所做出的客觀度較高的推測。"
+      }
+    }
+  },
+  {
+    "id": "purpose_intention",
+    "title": "目的意圖：ために vs ように",
+    "icon": "fa-bullseye",
+    "desc": "主語是否相同？動詞是否具備自主意志？日檢必考分辨題",
+    "itemIds": [
+      294,
+      873
+    ],
+    "nuances": {
+      "294": {
+        "keyword": "意志性行為的直接目的",
+        "detail": "前後句主語必須一致。前項必須接「意志動詞」原形。為了達成主觀抱負或明確意圖而付諸行動。"
+      },
+      "873": {
+        "keyword": "期望非意志狀態實現的目標",
+        "detail": "前後句主語可不同。前項通常接「可能形、無意志動詞、否定形（ない形）」。為了營造出某種期望的狀態或結果。"
+      }
+    }
+  },
+  {
+    "id": "koto_series",
+    "title": "こと系列：ことがある vs ことにする vs ことになる vs ことだ",
+    "icon": "fa-bookmark",
+    "desc": "四大「こと」語法：經驗與頻率 vs 自身決定 vs 體制客觀規定 vs 忠告建議",
+    "itemIds": [
+      137,
+      157,
+      160,
+      144
+    ],
+    "nuances": {
+      "137": {
+        "keyword": "經驗或偶爾發生的事",
+        "detail": "Vた＋ことがある（有過經驗）；V辞書形＋ことがある（有時偶爾會...）。"
+      },
+      "144": {
+        "keyword": "給予對方的具體良策忠告",
+        "detail": "針對面臨特定困境的人，給予「最好是.../務必不可...」的直接建議。"
+      },
+      "157": {
+        "keyword": "自己的主觀決定",
+        "detail": "由說話者自身意志所做出的未來行動決定（如：我決定每天慢跑）。"
+      },
+      "160": {
+        "keyword": "團體、體制或客觀環境的決定",
+        "detail": "並非個人單純意志，而是被團體規則、社會環境或他人商議後敲定的安排與規範。"
+      }
+    }
+  },
+  {
+    "id": "mono_series",
+    "title": "もの系列：ものだ vs ものだから vs ものなら vs ものの",
+    "icon": "fa-box-archive",
+    "desc": "感慨真理回憶 vs 理由辯解 vs 難圓之夢 vs 事實轉折",
+    "itemIds": [
+      830,
+      834,
+      837,
+      838
+    ],
+    "nuances": {
+      "830": {
+        "keyword": "世間常理、深刻感嘆或回憶過去",
+        "detail": "抒發長久以來的真理常態、感慨光陰似箭，或回想過去常常有的習慣。"
+      },
+      "834": {
+        "keyword": "口語中找理由開脫",
+        "detail": "向對方解釋事出有因，委婉傳達「因為...所以才會這樣嘛」。"
+      },
+      "837": {
+        "keyword": "萬一能做到（近乎不可能的願望）",
+        "detail": "接動詞可能形。通常是不太可能實現的願景（若真能回去的話真想回去）。"
+      },
+      "838": {
+        "keyword": "雖然確實如此，但…",
+        "detail": "接既成事實，雖然認同前半部分，但後半部分卻與期待有落差。"
+      }
+    }
+  },
+  {
+    "id": "limitation_scope",
+    "title": "限定範圍：だけ vs のみ vs しかない vs にすぎない",
+    "icon": "fa-crop-simple",
+    "desc": "單純限定 vs 正式書面 vs 無計可施別無選擇 vs 只不過如此而已",
+    "itemIds": [
+      253,
+      266,
+      185,
+      643
+    ],
+    "nuances": {
+      "185": {
+        "keyword": "別無他法、只能如此",
+        "detail": "別無其他選擇，處於無計可施的狀況，帶有莫可奈何的妥協感。"
+      },
+      "253": {
+        "keyword": "一般限定與累加對照",
+        "detail": "日常與書面皆通用的廣泛限定表現。"
+      },
+      "266": {
+        "keyword": "古雅正式書面限定",
+        "detail": "極度正式的書面語或演說語，比 だけ 更具權威與距離感。"
+      },
+      "643": {
+        "keyword": "只不過是…（評估不高）",
+        "detail": "強調事情微不足道，程度僅止於此，絕無誇大之處。"
+      }
+    }
+  },
+  {
+    "id": "difficulty",
+    "title": "難易程度：にくい vs づらい vs がたい vs かねる",
+    "icon": "fa-gauge-high",
+    "desc": "客觀物理性質困難 vs 主觀身心痛苦 vs 道德心理難以做到 vs 商務婉拒",
+    "itemIds": [
+      628,
+      346,
+      68,
+      80
+    ],
+    "nuances": {
+      "68": {
+        "keyword": "情理道德上難以相信或原諒",
+        "detail": "接意志動詞。在常理、道德、感情上覺得難以接受（如：難以置信、難以寬恕）。"
+      },
+      "80": {
+        "keyword": "商務場合客氣委婉拒絕",
+        "detail": "出於立場、合約或職責所在，委婉地表達「恕難答應、難以承辦」。"
+      },
+      "346": {
+        "keyword": "主觀身心感到痛苦或彆扭",
+        "detail": "說話者自己在心理或生理上感到痛苦、尷尬或壓力（如：話很難說出口、腳痛不好走）。"
+      },
+      "628": {
+        "keyword": "物理性質或客觀上難以執行",
+        "detail": "由於物體構造、客觀環境或生理機制，導致該動作不易達成（如：這支筆不好寫）。"
+      }
+    }
+  },
+  {
+    "id": "tendency",
+    "title": "傾向樣態：がち vs っぽい vs 気味",
+    "icon": "fa-chart-line",
+    "desc": "頻繁不良傾向 vs 外觀性質帶有該色 vs 當下身心微恙",
+    "itemIds": [
+      71,
+      341,
+      107
+    ],
+    "nuances": {
+      "71": {
+        "keyword": "經常動不動就發生（多為負面現象）",
+        "detail": "一段時間內反覆出現某種不良行為或狀態（如：經常遲到、容易生病）。"
+      },
+      "107": {
+        "keyword": "當前隱約感覺到些許症狀",
+        "detail": "說話者此時此刻覺得身體或心理有點微恙（如：稍微有點感冒、有些睡眠不足）。"
+      },
+      "341": {
+        "keyword": "給人該種感覺、具備該特徵",
+        "detail": "感覺帶有某種性質（小孩氣、發白、容易發脾氣等），常用於外觀或性格。"
+      }
+    }
+  },
+  {
+    "id": "relation_topic",
+    "title": "對象關聯：について vs に関して vs に対して vs をめぐって",
+    "icon": "fa-arrows-split-up-and-left",
+    "desc": "調查思考對象 vs 正式關聯範疇 vs 對抗或朝向目標 vs 爭議圍繞核心",
+    "itemIds": [
+      657,
+      626,
+      650,
+      926
+    ],
+    "nuances": {
+      "626": {
+        "keyword": "廣泛領域（比 について 更正式）",
+        "detail": "正式書面語，涵蓋範圍較 について 更廣，多用於論文、法律條文或公文。"
+      },
+      "650": {
+        "keyword": "朝向特定對象 / 正反對比",
+        "detail": "可表示對某人做出態度或行動；亦可表示 A 與 B 兩者的強烈對比。"
+      },
+      "657": {
+        "keyword": "具體主題（調查、研究、談論）",
+        "detail": "最基礎廣泛的用法，針對特定單一主題進行思考或闡述。"
+      },
+      "926": {
+        "keyword": "眾人圍繞著爭論焦點各持己見",
+        "detail": "圍繞著遺產、政策、所有權等引發各方爭論或多元競爭紛爭。"
+      }
+    }
+  },
+  {
+    "id": "obligation_advice",
+    "title": "義務勸告：べきだ vs ほうがいい vs ざるを得ない",
+    "icon": "fa-handshake-angle",
+    "desc": "社會道德理應如此 vs 親切個人建議 vs 迫於現實不得不做",
+    "itemIds": [
+      751,
+      759,
+      181
+    ],
+    "nuances": {
+      "181": {
+        "keyword": "違背個人意願但不得不做",
+        "detail": "雖然內心百般不情願，但迫於現實形勢或大局壓力，只好硬著頭皮去做。"
+      },
+      "751": {
+        "keyword": "社會常識或道德上的義務理當如此",
+        "detail": "基於公序良俗、法律道義或做人原則，認為「應當這樣做」。"
+      },
+      "759": {
+        "keyword": "親切具體的個人建議",
+        "detail": "根據具體情況向對方提出「這樣做會比較好」的友善提議。"
+      }
+    }
+  },
+  {
+    "id": "degree_proportion",
+    "title": "程度比例：ば〜ほど vs くらい vs ほど〜はない",
+    "icon": "fa-arrow-trend-up",
+    "desc": "越…越…比例變化 vs 大約輕微程度 vs 沒有比這更甚的最高級",
+    "itemIds": [
+      710,
+      119,
+      766
+    ],
+    "nuances": {
+      "119": {
+        "keyword": "大概、輕微的程度",
+        "detail": "日常口語中表示大約的分量或微小的程度。"
+      },
+      "710": {
+        "keyword": "越是前項就越發後項（正相關比例）",
+        "detail": "前項條件程度加深，後項的程度也隨之同步放大。"
+      },
+      "766": {
+        "keyword": "主觀認定無可取代的最高級",
+        "detail": "「沒有比…更…的了」，強烈抒發主觀極致情感。"
+      }
+    }
+  },
+  {
+    "id": "addition_parallel",
+    "title": "並列累加：だけでなく vs ばかりでなく vs はもちろん vs さえ",
+    "icon": "fa-layer-group",
+    "desc": "不僅而且 vs 不光是連…也 vs 理所當然不消說 vs 連極端例子都",
+    "itemIds": [
+      253,
+      719,
+      740,
+      177
+    ],
+    "nuances": {
+      "177": {
+        "keyword": "連…都（舉出極端例子）",
+        "detail": "舉出最底線或最極端的例子，以此暗示其他普通情況更是不言自明。"
+      },
+      "253": {
+        "keyword": "不僅…而且…（普適平實累加）",
+        "detail": "前後兩項平穩遞進累加，口語與書面均廣泛使用。"
+      },
+      "719": {
+        "keyword": "範圍向外蔓延（不光是…連…都）",
+        "detail": "範圍比 expected 更加外溢，影響面更廣。"
+      },
+      "740": {
+        "keyword": "前項自不待言，後項更進一步",
+        "detail": "前項是大家公認理所當然的基準，後項則是追加的更高等級或更廣範圍。"
+      }
+    }
+  }
+];
+
+        const SEMANTIC_KEYWORDS = [
+            ['因為', '由於', '之所以', '原因', '理由'],
+            ['雖然', '儘管', '即使', '卻', '然而', '轉折', '逆接'],
+            ['如果', '要是', '假使', '只要', '條件', '假設'],
+            ['剛', '剛才', '剛剛', '才剛'],
+            ['好像', '似乎', '彷彿', '大概', '推測', '推量', '樣態'],
+            ['必須', '應該', '義務', '不得不', '只好'],
+            ['一邊', '同時', '一邊...一邊'],
+            ['關於', '針對', '有關', '圍繞'],
+            ['只有', '僅僅', '光是', '限定', '唯有'],
+            ['越...越', '程度', '比起', '不如', '比例'],
+            ['正要', '正在', '動作'],
+            ['難以', '很難', '無法', '不能'],
+            ['容易', '動不動就', '傾向']
+        ];
+
+        let activeMainTab = 'browse'; // 'browse' or 'compare'
+        let currentCompareIds = [717, 487, 275]; // Default: 時間剛好 たばかり vs たところ vs たて
+        let activePresetId = 'time_just_done';
+
+        function switchMainTab(mode) {
+            activeMainTab = mode;
+            const tabBrowseBtn = document.getElementById('tabBrowseBtn');
+            const tabCompareBtn = document.getElementById('tabCompareBtn');
+            const browseSection = document.getElementById('browseSection');
+            const compareSection = document.getElementById('compareSection');
+
+            if (mode === 'browse') {
+                tabBrowseBtn.classList.add('active');
+                tabCompareBtn.classList.remove('active');
+                browseSection.style.display = 'block';
+                compareSection.style.display = 'none';
+            } else {
+                tabCompareBtn.classList.add('active');
+                tabBrowseBtn.classList.remove('active');
+                browseSection.style.display = 'none';
+                compareSection.style.display = 'flex';
+                renderCompareView();
+                window.scrollTo({ top: 380, behavior: 'smooth' });
+            }
+        }
+
+        // Smart Local Similarity Algorithm
+        function findSimilarGrammars(targetId, limit = 3) {
+            const target = GRAMMAR_DATA.find(d => d.id === targetId);
+            if (!target) return [];
+
+            // Check if part of curated group
+            const curatedMatch = CURATED_COMPARE_GROUPS.find(g => g.itemIds.includes(targetId));
+            const curatedSiblingIds = curatedMatch ? curatedMatch.itemIds.filter(id => id !== targetId) : [];
+
+            const scores = [];
+            const targetSeries = Array.isArray(target.series) ? target.series : (target.series ? [target.series] : []);
+
+            GRAMMAR_DATA.forEach(item => {
+                if (item.id === targetId) return;
+                let score = 0;
+
+                if (curatedSiblingIds.includes(item.id)) {
+                    score += 200;
+                }
+
+                const itemSeries = Array.isArray(item.series) ? item.series : (item.series ? [item.series] : []);
+                const sharedSeries = targetSeries.filter(s => itemSeries.includes(s));
+                if (sharedSeries.length > 0) {
+                    score += 45 * sharedSeries.length;
+                }
+
+                if (item.category && item.category === target.category) {
+                    score += 30;
+                }
+
+                SEMANTIC_KEYWORDS.forEach(kwList => {
+                    const targetHas = kwList.some(k => (target.meaningZh || '').includes(k));
+                    const itemHas = kwList.some(k => (item.meaningZh || '').includes(k));
+                    if (targetHas && itemHas) {
+                        score += 25;
+                    }
+                });
+
+                const cleanT = (target.clean_title || target.title).replace(/^[〜~]/, '');
+                const cleanI = (item.clean_title || item.title).replace(/^[〜~]/, '');
+                if (cleanT.length >= 2 && cleanI.length >= 2) {
+                    const stemT = cleanT.slice(0, 3);
+                    if (cleanI.startsWith(stemT) || cleanT.startsWith(cleanI.slice(0, 3))) {
+                        score += 25;
+                    }
+                }
+
+                if (item.level === target.level) {
+                    score += 5;
+                }
+
+                if (score > 15) {
+                    scores.push({ item, score, isCurated: curatedSiblingIds.includes(item.id) });
+                }
+            });
+
+            scores.sort((a, b) => b.score - a.score);
+            return scores.slice(0, limit);
+        }
+
+        // Get specific nuance text for an item in comparison
+        function getGrammarNuance(itemId, currentGroup) {
+            if (currentGroup && currentGroup.nuances && currentGroup.nuances[itemId]) {
+                return currentGroup.nuances[itemId];
+            }
+            // Search other curated groups
+            for (const g of CURATED_COMPARE_GROUPS) {
+                if (g.nuances && g.nuances[itemId]) {
+                    return g.nuances[itemId];
+                }
+            }
+            const item = GRAMMAR_DATA.find(d => d.id === itemId);
+            if (!item) return null;
+            return {
+                keyword: '核心特色與用法',
+                detail: item.note || item.meaningZh
+            };
+        }
+
+        // Render Compare Workspace
+        function renderCompareView() {
+            renderComparePresets();
+            renderCompareChips();
+            renderCompareGrid();
+        }
+
+        function renderComparePresets() {
+            const container = document.getElementById('comparePresetPills');
+            if (!container) return;
+
+            container.innerHTML = CURATED_COMPARE_GROUPS.map(g => {
+                const isActive = g.id === activePresetId;
+                return `<button class="preset-pill-btn ${isActive ? 'active' : ''}" onclick="selectComparePreset('${g.id}')">
+                    <i class="fa-solid ${g.icon || 'fa-tag'}"></i> ${g.title}
+                </button>`;
+            }).join('');
+        }
+
+        function selectComparePreset(groupId) {
+            activePresetId = groupId;
+            const group = CURATED_COMPARE_GROUPS.find(g => g.id === groupId);
+            if (group) {
+                currentCompareIds = [...group.itemIds.slice(0, 4)];
+                renderCompareView();
+            }
+        }
+
+        function resetCompareToDefault() {
+            selectComparePreset('time_just_done');
+        }
+
+        function renderCompareChips() {
+            const container = document.getElementById('compareActiveChips');
+            if (!container) return;
+
+            container.innerHTML = currentCompareIds.map((id, idx) => {
+                const item = GRAMMAR_DATA.find(d => d.id === id);
+                if (!item) return '';
+                return `
+                    <span class="compare-chip">
+                        <span class="level-badge ${getLevelBadgeClass(item.level)}" style="font-size: 0.72rem; padding: 0.1rem 0.4rem;">${item.level}</span>
+                        ${item.title}
+                        ${currentCompareIds.length > 2 ? `<i class="fa-solid fa-xmark compare-chip-remove" onclick="removeCompareItem(${id})" title="移除此文法"></i>` : ''}
+                    </span>
+                `;
+            }).join('');
+        }
+
+        function removeCompareItem(id) {
+            if (currentCompareIds.length <= 2) {
+                showToast('至少需要保留 2 條文法進行對照！');
+                return;
+            }
+            currentCompareIds = currentCompareIds.filter(item => item !== id);
+            activePresetId = null;
+            renderCompareView();
+        }
+
+        function addCompareItem(id) {
+            if (currentCompareIds.includes(id)) {
+                showToast('此文法已在比對清單中！');
+                return;
+            }
+            if (currentCompareIds.length >= 4) {
+                showToast('並排比對最多支援 4 條文法，請先移除其中一條。');
+                return;
+            }
+            currentCompareIds.push(id);
+            activePresetId = null;
+            renderCompareView();
+            showToast('已加入並排對照清單！');
+        }
+
+        function autoDetectCurrentSimilar() {
+            if (currentCompareIds.length === 0) return;
+            const targetId = currentCompareIds[0];
+            const target = GRAMMAR_DATA.find(d => d.id === targetId);
+            const sims = findSimilarGrammars(targetId, 3);
+            if (similars.length === 0) {
+                showToast('未找到足夠相似的近義文法');
+                return;
+            }
+            currentCompareIds = [targetId, ...sims.map(s => s.item.id).slice(0, 3)];
+            activePresetId = null;
+            renderCompareView();
+            showToast(`已為「${target.title}」智慧探測出 ${sims.length} 則類似文法！`);
+        }
+
+        function renderCompareGrid() {
+            const grid = document.getElementById('compareGrid');
+            if (!grid) return;
+
+            const currentGroup = CURATED_COMPARE_GROUPS.find(g => g.id === activePresetId);
+
+            grid.innerHTML = currentCompareIds.map(id => {
+                const item = GRAMMAR_DATA.find(d => d.id === id);
+                if (!item) return '';
+
+                const isFav = favorites.has(item.id);
+                const levelClass = getLevelBadgeClass(item.level);
+                const nuance = getGrammarNuance(item.id, currentGroup);
+                const seriesHtml = (item.series || []).map(s => `<span class="series-badge">${s}</span>`).join('');
+
+                return `
+                    <div class="compare-card">
+                        <!-- Card Header -->
+                        <div class="compare-card-header">
+                            <div class="badges-wrap">
+                                <span class="level-badge ${levelClass}">${item.level}</span>
+                                <span class="row-badge">${item.row}</span>
+                                <span class="cat-badge">${item.category}</span>
+                                ${seriesHtml}
+                            </div>
+                            <div class="compare-card-title-row">
+                                <div>
+                                    <div class="compare-card-title">${item.title}</div>
+                                    ${item.kana ? `<div style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.15rem;">${item.kana}</div>` : ''}
+                                </div>
+                                <div class="compare-card-actions">
+                                    <button class="compare-icon-btn ${isFav ? 'text-yellow-400' : ''}" onclick="toggleFavorite(${item.id}); renderCompareGrid();" title="收藏此文法">
+                                        <i class="fa-${isFav ? 'solid' : 'regular'} fa-star"></i>
+                                    </button>
+                                    <button class="compare-icon-btn" onclick="openDetailById(${item.id})" title="打開完整詳解抽屜">
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="compare-card-body">
+                            <!-- Form Box -->
+                            <div>
+                                <div class="compare-block-label"><i class="fa-solid fa-link text-blue-500"></i> 接續形態與規則</div>
+                                <div class="compare-form-box">${item.form || '詳見情境例句接續'}</div>
+                            </div>
+
+                            <!-- Meaning Box -->
+                            <div>
+                                <div class="compare-block-label"><i class="fa-solid fa-circle-info text-blue-500"></i> 繁體中文深度釋義</div>
+                                <div class="compare-meaning-box">${item.meaningZh}</div>
+                            </div>
+
+                            <!-- Nuance Distinction Highlight -->
+                            ${nuance ? `
+                            <div>
+                                <div class="compare-block-label"><i class="fa-solid fa-scale-balanced text-amber-500"></i> 語感・語境與使用場合關鍵差異</div>
+                                <div class="compare-nuance-card">
+                                    <div class="compare-nuance-badge">
+                                        <i class="fa-solid fa-bolt"></i> ${nuance.keyword}
+                                    </div>
+                                    <div class="compare-nuance-text">${nuance.detail}</div>
+                                </div>
+                            </div>` : ''}
+
+                            <!-- Example Box -->
+                            <div>
+                                <div class="compare-block-label"><i class="fa-solid fa-comments text-emerald-500"></i> 經典對比例句</div>
+                                <div class="compare-example-card">
+                                    <div class="compare-example-jp">${item.exampleRuby || item.example}</div>
+                                    <div class="compare-example-zh">${item.translation}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Footer -->
+                        <div class="compare-card-footer">
+                            <button class="btn-card-action" onclick="copyToClipboard('${item.title}\n接續：${item.form}\n釋義：${item.meaningZh}\n例句：${item.example}\n翻譯：${item.translation}')" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">
+                                <i class="fa-regular fa-copy"></i> 複製此文法
+                            </button>
+                            <button class="btn-card-action" onclick="openDetailById(${item.id})" style="font-size: 0.8rem; padding: 0.35rem 0.75rem; color: var(--primary);">
+                                <i class="fa-solid fa-book-open"></i> 查看完整抽屜詳解
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Open specific grammar in comparison workspace
+        function openInCompareWorkspace(targetId) {
+            const target = GRAMMAR_DATA.find(d => d.id === targetId);
+            if (!target) return;
+
+            // Find curated group or similar items
+            const curated = CURATED_COMPARE_GROUPS.find(g => g.itemIds.includes(targetId));
+            if (curated) {
+                activePresetId = curated.id;
+                currentCompareIds = [...curated.itemIds.slice(0, 4)];
+            } else {
+                const sims = findSimilarGrammars(targetId, 3);
+                activePresetId = null;
+                currentCompareIds = [targetId, ...sims.map(s => s.item.id).slice(0, 3)];
+            }
+
+            switchMainTab('compare');
+            showToast(`已開啟「${target.title}」之近義文法前後對照專區！`);
+        }
+
+        // Render In-Drawer Similar Section
+        function renderDrawerSimilarHtml(item) {
+            const sims = findSimilarGrammars(item.id, 3);
+            if (sims.length === 0) return '';
+
+            const currentGroup = CURATED_COMPARE_GROUPS.find(g => g.itemIds.includes(item.id));
+
+            const cardsHtml = sims.map(s => {
+                const simItem = s.item;
+                const simNuance = getGrammarNuance(simItem.id, currentGroup);
+                const levelClass = getLevelBadgeClass(simItem.level);
+
+                return `
+                    <div class="drawer-similar-card" onclick="openDetailById(${simItem.id})">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span class="level-badge ${levelClass}" style="font-size: 0.75rem; padding: 0.15rem 0.45rem;">${simItem.level}</span>
+                                <strong style="font-size: 1.05rem; font-family: 'Noto Sans JP', sans-serif;">${simItem.title}</strong>
+                            </div>
+                            <span style="font-size: 0.8rem; color: var(--primary); font-weight: 700;">
+                                查看詳解 <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </div>
+                        <div style="font-size: 0.86rem; color: var(--text-main); line-height: 1.45;">
+                            <b>釋義：</b>${simItem.meaningZh.slice(0, 60)}${simItem.meaningZh.length > 60 ? '...' : ''}
+                        </div>
+                        ${simNuance ? `
+                        <div style="font-size: 0.82rem; color: #b45309; background: #fef3c7; padding: 0.25rem 0.5rem; border-radius: 4px;">
+                            ⚡ <b>區別焦點：</b>${simNuance.keyword}
+                        </div>` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            return `
+                <div>
+                    <div class="drawer-section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span><i class="fa-solid fa-code-compare text-blue-500"></i> 類似・近義文法前後對照 (共 ${sims.length} 條)</span>
+                        <button class="btn-compare-all" onclick="openInCompareWorkspace(${item.id}); closeDrawer();" title="將此文法與類似文法帶入對照專區以大螢幕橫向並排研讀">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> 大螢幕深入對比
+                        </button>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+                        ${cardsHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Compare Search Autocomplete
+        function initCompareSearch() {
+            const input = document.getElementById('compareSearchInput');
+            const dropdown = document.getElementById('compareDropdown');
+            if (!input || !dropdown) return;
+
+            input.addEventListener('input', () => {
+                const val = input.value.trim().toLowerCase();
+                if (!val) {
+                    dropdown.style.display = 'none';
+                    return;
+                }
+
+                const matches = GRAMMAR_DATA.filter(item => {
+                    return item.title.toLowerCase().includes(val) ||
+                           (item.clean_title && item.clean_title.toLowerCase().includes(val)) ||
+                           (item.meaningZh && item.meaningZh.toLowerCase().includes(val)) ||
+                           (item.kana && item.kana.toLowerCase().includes(val));
+                }).slice(0, 10);
+
+                if (matches.length === 0) {
+                    dropdown.innerHTML = '<div style="padding: 0.75rem 1rem; color: var(--text-muted); font-size: 0.9rem;">查無符合的文法項目</div>';
+                    dropdown.style.display = 'block';
+                    return;
+                }
+
+                dropdown.innerHTML = matches.map(m => {
+                    const isAlready = currentCompareIds.includes(m.id);
+                    return `
+                        <div class="compare-dropdown-item" onclick="handleCompareSelect(${m.id})">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span class="level-badge ${getLevelBadgeClass(m.level)}" style="font-size: 0.7rem; padding: 0.1rem 0.35rem;">${m.level}</span>
+                                <strong style="font-family: 'Noto Sans JP', sans-serif;">${m.title}</strong>
+                                <span style="font-size: 0.8rem; color: var(--text-muted);">${m.meaningZh.slice(0, 25)}...</span>
+                            </div>
+                            <span style="font-size: 0.8rem; color: ${isAlready ? 'var(--text-muted)' : 'var(--primary)'}; font-weight: 700;">
+                                ${isAlready ? '已在比對中' : '+ 加入比對'}
+                            </span>
+                        </div>
+                    `;
+                }).join('');
+
+                dropdown.style.display = 'block';
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        }
+
+        function handleCompareSelect(id) {
+            const dropdown = document.getElementById('compareDropdown');
+            const input = document.getElementById('compareSearchInput');
+            if (dropdown) dropdown.style.display = 'none';
+            if (input) input.value = '';
+
+            addCompareItem(id);
+        }
+
     </script>
 </body>
 </html>
