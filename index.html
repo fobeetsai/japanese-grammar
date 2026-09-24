@@ -2805,6 +2805,19 @@
             renderFilterPills();
             applyFilters();
 
+            // 支援從日文小說閱讀器/外部透過 ?id= 或 ?q= 連動直接開啟文法詳解
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('id')) {
+                const targetId = parseInt(urlParams.get('id'), 10);
+                setTimeout(() => openDetailById(targetId), 200);
+            } else if (urlParams.has('q')) {
+                const q = urlParams.get('q');
+                searchInput.value = q;
+                currentFilter.search = q;
+                btnClearSearch.style.display = 'block';
+                applyFilters();
+            }
+
             // Search input
             searchInput.addEventListener('input', (e) => {
                 currentFilter.search = e.target.value;
